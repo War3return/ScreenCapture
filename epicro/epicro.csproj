@@ -1,0 +1,264 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{4DDD37B1-E3E8-46C1-BDE9-3039A93DAF27}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <RootNamespace>epicro</RootNamespace>
+    <AssemblyName>epicro</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <WarningLevel>4</WarningLevel>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>epicro_sub.ico</ApplicationIcon>
+    <RuntimeIdentifiers>win</RuntimeIdentifiers>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xaml">
+      <RequiredTargetFramework>4.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="WindowsBase" />
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+  </ItemGroup>
+  <ItemGroup>
+    <ApplicationDefinition Include="App.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </ApplicationDefinition>
+    <Compile Include="BeltSetting.xaml.cs">
+      <DependentUpon>BeltSetting.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Helpers\BossImageHelper.cs" />
+    <Compile Include="Helpers\TelegramBotService.cs" />
+    <Compile Include="Helpers\TelegramConfig.cs" />
+    <Compile Include="CharChangeWindow.xaml.cs">
+      <DependentUpon>CharChangeWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="TelegramSettingWindow.xaml.cs">
+      <DependentUpon>TelegramSettingWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Helpers\BossMatcher.cs" />
+    <Compile Include="Helpers\ClipboardHelper.cs" />
+    <Compile Include="Helpers\InputHelper.cs" />
+    <Compile Include="Helpers\OcrService.cs" />
+    <Compile Include="Helpers\ParseRoiHelper.cs" />
+    <Compile Include="Helpers\GoldMemoryReader.cs" />
+    <Compile Include="Helpers\ProcessMemoryWatcher.cs" />
+    <Compile Include="Helpers\Wc3ChatSender.cs" />
+    <Compile Include="ItemMixWindow.xaml.cs">
+      <DependentUpon>ItemMixWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Logic\BeltMacro.cs" />
+    <Compile Include="Logic\BossSummonerWpf.cs" />
+    <Compile Include="Helpers\SettingsManager.cs" />
+    <Compile Include="Helpers\CharChangeItemData.cs" />
+    <Compile Include="Helpers\SaveFileParser.cs" />
+    <Compile Include="Helpers\UpdateHelper.cs" />
+    <Compile Include="Models\AppSettings.cs" />
+    <!-- ── Wc3 포팅 파일 ── -->
+    <Compile Include="Wc3\BanlistModel.cs" />
+    <Compile Include="Wc3\Component.cs" />
+    <Compile Include="Wc3\CProcess.cs" />
+    <Compile Include="Wc3\GameModule.cs" />
+    <Compile Include="Wc3\HangWatchdog.cs" />
+    <Compile Include="Wc3\NativeMethods.cs" />
+    <Compile Include="Wc3\SaveLoad.cs" />
+    <Compile Include="Wc3\TgaReader.cs" />
+    <Compile Include="Wc3\Wc3Globals.cs" />
+    <Compile Include="Wc3\Memory\BanList.cs" />
+    <Compile Include="Wc3\Memory\ChannelChat.cs" />
+    <Compile Include="Wc3\Memory\ControlDelay.cs" />
+    <Compile Include="Wc3\Memory\GameDll.cs" />
+    <Compile Include="Wc3\Memory\Join.cs" />
+    <Compile Include="Wc3\Memory\LoadedFiles.cs" />
+    <Compile Include="Wc3\Memory\Message.cs" />
+    <Compile Include="Wc3\Memory\MessageFrame.cs" />
+    <Compile Include="Wc3\Memory\Replay.cs" />
+    <Compile Include="Wc3\Memory\States.cs" />
+    <Compile Include="Wc3\KeyHook\KeyboardHooker.cs" />
+    <Compile Include="Wc3\Worker\Actions.cs" />
+    <Compile Include="Wc3\Worker\AutoMouse.cs" />
+    <Compile Include="Wc3\Worker\AutoRG.cs" />
+    <Compile Include="Wc3\Worker\AutoStarter.cs" />
+    <Compile Include="Wc3\Worker\ChatHotkey.cs" />
+    <Compile Include="Wc3\Worker\MacroHotkey.cs" />
+    <Compile Include="Wc3\Worker\Commands.cs" />
+    <Compile Include="Wc3\Worker\MaxRoom.cs" />
+    <Compile Include="Wc3\Worker\MinRoom.cs" />
+    <Compile Include="Models\BossConfig.cs" />
+    <Compile Include="BossSetting.xaml.cs">
+      <DependentUpon>BossSetting.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Helpers\NativeMethods.cs" />
+    <Compile Include="Models\BossStats.cs" />
+    <Compile Include="Models\ItemMixConfig.cs" />
+    <Compile Include="MonitorEnumerationHelper.cs" />
+    <Compile Include="OcrSettingWindow.xaml.cs">
+      <DependentUpon>OcrSettingWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ROIWindow.xaml.cs">
+      <DependentUpon>ROIWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="utilities\SoftwareBitmapCopy.cs" />
+    <Compile Include="WindowEnumerationHelper.cs" />
+    <Compile Include="WindowInfo.cs" />
+    <Page Include="BeltSetting.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="BossSetting.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ItemMixWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="CirnixSettingWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="RpgSettingWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MainWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Compile Include="App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="CirnixSettingWindow.xaml.cs">
+      <DependentUpon>CirnixSettingWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="RpgSettingWindow.xaml.cs">
+      <DependentUpon>RpgSettingWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MainWindow.xaml.cs">
+      <DependentUpon>MainWindow.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Page Include="OcrSettingWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ROIWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="TelegramSettingWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="CharChangeWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CaptureSampleCore\CaptureSampleCore.csproj">
+      <Project>{ec96d899-7239-fd06-c6d1-ea74a63a0231}</Project>
+      <Name>CaptureSampleCore</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Composition.WindowsRuntimeHelpers\Composition.WindowsRuntimeHelpers.csproj">
+      <Project>{ec969287-3d35-410a-806c-0baaa7564911}</Project>
+      <Name>Composition.WindowsRuntimeHelpers</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Windows.SDK.Contracts">
+      <Version>10.0.22621.2</Version>
+    </PackageReference>
+    <PackageReference Include="OpenCvSharp4.Extensions">
+      <Version>4.10.0.20241108</Version>
+    </PackageReference>
+    <PackageReference Include="OpenCvSharp4.Windows">
+      <Version>4.10.0.20241108</Version>
+    </PackageReference>
+    <PackageReference Include="Newtonsoft.Json">
+      <Version>13.0.3</Version>
+    </PackageReference>
+    <PackageReference Include="Tesseract">
+      <Version>5.2.0</Version>
+    </PackageReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="epicro_main.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="epicro_sub.ico" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PreBuildEvent>
+    </PreBuildEvent>
+  </PropertyGroup>
+  <PropertyGroup>
+    <PostBuildEvent>
+    </PostBuildEvent>
+  </PropertyGroup>
+</Project>

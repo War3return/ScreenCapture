@@ -1,0 +1,434 @@
+<Window x:Class="epicro.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:epicro"
+        mc:Ignorable="d"
+        Title="epicro" Height="580" Width="960"
+        MinHeight="480" MinWidth="800"
+        Icon="/epicro_sub.ico"
+        Background="{StaticResource BgPrimaryBrush}"
+        Loaded="Window_Loaded"
+        Closing="Window_Closing">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="44"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- ══════════════════════════════════════════════════ -->
+        <!--  HEADER BAR                                        -->
+        <!-- ══════════════════════════════════════════════════ -->
+        <Border Grid.Row="0"
+                Background="{StaticResource BgSurfaceBrush}"
+                BorderBrush="{StaticResource BorderBrush_}"
+                BorderThickness="0,0,0,1">
+            <Grid Margin="14,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <!-- 로고 -->
+                <StackPanel Grid.Column="0" Orientation="Horizontal"
+                            VerticalAlignment="Center" Margin="0,0,18,0">
+                    <Ellipse Width="8" Height="8" Fill="{StaticResource AccentBrush}"
+                             Margin="0,0,7,0" VerticalAlignment="Center"/>
+                    <TextBlock Text="epicro" FontSize="15" FontWeight="SemiBold"
+                               Foreground="{StaticResource TextPrimaryBrush}"
+                               VerticalAlignment="Center"/>
+                </StackPanel>
+
+                <!-- 구분선 -->
+                <Rectangle Grid.Column="1" Width="1" Height="20" Margin="0,0,18,0"
+                           Fill="{StaticResource BorderBrush_}" VerticalAlignment="Center"/>
+
+                <!-- 창 선택 -->
+                <StackPanel Grid.Column="2" Orientation="Horizontal" VerticalAlignment="Center">
+                    <ComboBox x:Name="WindowComboBox" Width="220"
+                              SelectionChanged="WindowComboBox_SelectionChanged"
+                              DropDownOpened="WindowComboBox_DropDownOpened">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Title}"/>
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
+                    <Button x:Name="btnReset" Content="리셋" Width="44" Margin="6,0,0,0"
+                            Click="btnReset_Click"/>
+                </StackPanel>
+
+                <!-- 우측: 메모리 레이블 -->
+                <Label x:Name="memoryLabel" Grid.Column="3"
+                       Content=""
+                       Foreground="{StaticResource TextSecondaryBrush}"
+                       FontSize="10" VerticalAlignment="Center"
+                       Margin="0,0,14,0"/>
+            </Grid>
+        </Border>
+
+        <!-- ══════════════════════════════════════════════════ -->
+        <!--  BODY  (Sidebar + Main)                            -->
+        <!-- ══════════════════════════════════════════════════ -->
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="190"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <!-- ─────────────────────────────────────── -->
+            <!--  LEFT SIDEBAR                           -->
+            <!-- ─────────────────────────────────────── -->
+            <Border Grid.Column="0"
+                    Background="{StaticResource BgSurfaceBrush}"
+                    BorderBrush="{StaticResource BorderBrush_}"
+                    BorderThickness="0,0,1,0">
+                <ScrollViewer VerticalScrollBarVisibility="Auto"
+                              HorizontalScrollBarVisibility="Disabled">
+                    <StackPanel>
+
+                        <!-- ── 벨트 매크로 Expander ──── -->
+                        <Expander Header="벨트 매크로" IsExpanded="False">
+                            <StackPanel>
+                                <Button x:Name="btnBeltStart" Content="▶  시작"
+                                        Style="{StaticResource SidebarBtn}"
+                                        Click="btnBeltStart_Click"/>
+                                <Button x:Name="btnBeltStop"  Content="■  중지"
+                                        Style="{StaticResource SidebarBtn}"
+                                        Click="btnBeltStop_Click"/>
+                                <Button x:Name="btnBeltSet"   Content="⚙  설정"
+                                        Style="{StaticResource SidebarBtn}"
+                                        Click="btnBeltSet_Click"/>
+                                <Button x:Name="btn_Macro_Belt" FontSize="10" Margin="8,2,8,4"
+                                        Padding="4,3"
+                                        ToolTip="클릭 후 키를 누르세요&#10;Delete/Backspace: 해제"
+                                        Click="btn_Macro_Belt_Click"/>
+                            </StackPanel>
+                        </Expander>
+
+                        <!-- ── 보스 소환 Expander ───── -->
+                        <Expander Header="보스 소환" IsExpanded="False">
+                            <StackPanel>
+                                <Button x:Name="btn_BossStart"   Content="▶  시작"
+                                        Style="{StaticResource SidebarBtn}"
+                                        Click="btn_BossStart_Click"/>
+                                <Button x:Name="btn_BossStop"    Content="■  중지"
+                                        Style="{StaticResource SidebarBtn}"
+                                        Click="btn_BossStop_Click"/>
+                                <Button x:Name="btn_BossSetting" Content="⚙  설정"
+                                        Style="{StaticResource SidebarBtn}"
+                                        Click="btn_BossSetting_Click"/>
+                                <Button x:Name="btn_Macro_Boss" FontSize="10" Margin="8,2,8,4"
+                                        Padding="4,3"
+                                        ToolTip="클릭 후 키를 누르세요&#10;Delete/Backspace: 해제"
+                                        Click="btn_Macro_Boss_Click"/>
+
+                                <!-- 보스존 / 인식방법 / 소환순서 -->
+                                <Border Margin="12,6,12,10"
+                                        Background="{StaticResource BgCardBrush}"
+                                        CornerRadius="8" Padding="10,8">
+                                    <StackPanel>
+                                        <!-- 보스존 -->
+                                        <TextBlock Text="보스존"
+                                                   Foreground="{StaticResource TextSecondaryBrush}"
+                                                   FontSize="10" Margin="0,0,0,4"/>
+                                        <ComboBox x:Name="cbb_BossZone" Margin="0,0,0,10"
+                                                  SelectionChanged="cbb_BossZone_SelectionChanged">
+                                            <ComboBoxItem Content="유적지"/>
+                                            <ComboBoxItem Content="해역"/>
+                                            <ComboBoxItem Content="태엽"/>
+                                            <ComboBoxItem Content="키사메"/>
+                                            <ComboBoxItem Content="키미"/>
+                                            <ComboBoxItem Content="데달"/>
+                                            <ComboBoxItem Content="유기토"/>
+                                            <ComboBoxItem Content="우타"/>
+                                            <ComboBoxItem Content="사성수"/>
+                                        </ComboBox>
+
+                                        <!-- 인식방법 -->
+                                        <TextBlock Text="인식방법"
+                                                   Foreground="{StaticResource TextSecondaryBrush}"
+                                                   FontSize="10" Margin="0,0,0,4"/>
+                                        <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
+                                            <RadioButton x:Name="rb_Gold" Content="골드" Margin="0,0,12,0"/>
+                                            <RadioButton x:Name="rb_Tree" Content="목재"/>
+                                        </StackPanel>
+
+                                        <!-- 소환순서 -->
+                                        <TextBlock Text="소환순서"
+                                                   Foreground="{StaticResource TextSecondaryBrush}"
+                                                   FontSize="10" Margin="0,0,0,4"/>
+                                        <TextBox x:Name="txt_BossOrder"/>
+                                    </StackPanel>
+                                </Border>
+                            </StackPanel>
+                        </Expander>
+
+                        <!-- ── 골드 인식 Expander ──── -->
+                        <Expander Header="골드 인식" IsExpanded="False">
+                            <StackPanel>
+                                <Border Margin="12,6,12,10"
+                                        Background="{StaticResource BgCardBrush}"
+                                        CornerRadius="8" Padding="10,8">
+                                    <StackPanel>
+
+                                        <!-- 플레이어 번호 -->
+                                        <TextBlock Text="플레이어"
+                                                   Foreground="{StaticResource TextSecondaryBrush}"
+                                                   FontSize="10" Margin="0,0,0,2"/>
+                                        <TextBlock x:Name="txtPlayerIndex"
+                                                   Text="—"
+                                                   FontSize="15" FontWeight="SemiBold"
+                                                   Foreground="{StaticResource AccentBrush}"
+                                                   Margin="0,0,0,8"/>
+
+                                        <!-- 골드 -->
+                                        <TextBlock Text="골드"
+                                                   Foreground="{StaticResource TextSecondaryBrush}"
+                                                   FontSize="10" Margin="0,0,0,2"/>
+                                        <TextBlock x:Name="txtGoldResult"
+                                                   Text="—"
+                                                   FontSize="18" FontWeight="SemiBold"
+                                                   Foreground="{StaticResource TextPrimaryBrush}"
+                                                   Margin="0,0,0,8"/>
+
+                                        <!-- 목재 -->
+                                        <TextBlock Text="목재"
+                                                   Foreground="{StaticResource TextSecondaryBrush}"
+                                                   FontSize="10" Margin="0,0,0,2"/>
+                                        <TextBlock x:Name="txtLumberResult"
+                                                   Text="—"
+                                                   FontSize="18" FontWeight="SemiBold"
+                                                   Foreground="{StaticResource TextPrimaryBrush}"
+                                                   Margin="0,0,0,8"/>
+
+                                        <Button x:Name="btnGoldTest" Content="자원 읽기"
+                                                Style="{StaticResource SidebarBtn}"
+                                                Click="btnGoldTest_Click"/>
+                                    </StackPanel>
+                                </Border>
+                            </StackPanel>
+                        </Expander>
+
+                        <!-- ── 기타 Expander ────────── -->
+                        <Expander Header="기타" IsExpanded="False">
+                            <StackPanel>
+                                <Button x:Name="btnItemMix" Content="📦  조합재료"
+                                        Style="{StaticResource SidebarBtn}"
+                                        Click="btnItemMix_Click"/>
+                                <Button x:Name="btnTelegramSetting" Content="✈  텔레그램 연동"
+                                        Style="{StaticResource SidebarBtn}"
+                                        Click="btnTelegramSetting_Click"/>
+                                <Button Content="✏  캐릭터변경 신청 양식"
+                                        Style="{StaticResource SidebarBtn}"
+                                        Click="btn_OpenCharChange_Click"/>
+
+                                <!-- 잠금 전송 -->
+                                <Border Margin="12,6,12,10"
+                                        Background="{StaticResource BgCardBrush}"
+                                        CornerRadius="8" Padding="10,8">
+                                    <StackPanel>
+                                        <TextBlock Text="잠금 전송"
+                                                   Foreground="{StaticResource TextSecondaryBrush}"
+                                                   FontSize="10" Margin="0,0,0,6"/>
+                                        <UniformGrid Columns="2">
+                                            <CheckBox x:Name="cb_lock1" Content="잠금1" Margin="2,3"/>
+                                            <CheckBox x:Name="cb_lock2" Content="잠금2" Margin="2,3"/>
+                                            <CheckBox x:Name="cb_lock3" Content="잠금3" Margin="2,3"/>
+                                            <CheckBox x:Name="cb_lock4" Content="잠금4" Margin="2,3"/>
+                                            <CheckBox x:Name="cb_lock5" Content="잠금5" Margin="2,3"/>
+                                            <CheckBox x:Name="cb_lock6" Content="잠금6" Margin="2,3"/>
+                                        </UniformGrid>
+                                        <Button x:Name="btnSendLock" Content="잠금 전송"
+                                                Margin="0,8,0,0"
+                                                Click="btnSendLock_Click"/>
+                                    </StackPanel>
+                                </Border>
+
+                                <!-- 강화 확인 -->
+                                <Border Margin="12,6,12,10"
+                                        Background="{StaticResource BgCardBrush}"
+                                        CornerRadius="8" Padding="10,8">
+                                    <StackPanel>
+                                        <TextBlock Text="강화 확인"
+                                                   Foreground="{StaticResource TextSecondaryBrush}"
+                                                   FontSize="10" Margin="0,0,0,6"/>
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*"/>
+                                                <ColumnDefinition Width="6"/>
+                                                <ColumnDefinition Width="80"/>
+                                            </Grid.ColumnDefinitions>
+                                            <ComboBox x:Name="cbb_UpgradeType"
+                                                      Grid.Column="0"
+                                                      SelectedIndex="0">
+                                                <ComboBoxItem Content="무기"/>
+                                                <ComboBoxItem Content="방어구"/>
+                                                <ComboBoxItem Content="장갑"/>
+                                                <ComboBoxItem Content="악세"/>
+                                                <ComboBoxItem Content="히든"/>
+                                            </ComboBox>
+                                            <TextBox x:Name="txt_UpgradeLevel"
+                                                     Grid.Column="2"
+                                                     ToolTip="강화 수치 (숫자)"/>
+                                        </Grid>
+                                        <Button x:Name="btnUpgradeCheck" Content="강화확인"
+                                                Margin="0,8,0,0"
+                                                Click="btnUpgradeCheck_Click"/>
+                                    </StackPanel>
+                                </Border>
+                            </StackPanel>
+                        </Expander>
+
+                        <!-- ── Cirnix Expander ────── -->
+                        <Expander Header="Cirnix" IsExpanded="True">
+                            <StackPanel>
+                                <!-- 상태 카드 -->
+                                <Border Margin="12,6,12,6"
+                                        Background="{StaticResource BgCardBrush}"
+                                        CornerRadius="8" Padding="10,8">
+                                    <StackPanel>
+                                        <StackPanel Orientation="Horizontal" Margin="0,0,0,3">
+                                            <Ellipse x:Name="dot_Wc3Connected"
+                                                     Width="7" Height="7"
+                                                     Fill="#FF606060"
+                                                     VerticalAlignment="Center"
+                                                     Margin="0,0,6,0"/>
+                                            <TextBlock x:Name="lbl_Wc3Status"
+                                                       Text="WC3 미연결"
+                                                       FontSize="10"
+                                                       Foreground="{StaticResource TextSecondaryBrush}"/>
+                                        </StackPanel>
+                                    </StackPanel>
+                                </Border>
+
+                                <CheckBox x:Name="chk_Main_CirnixEnabled"
+                                          Content="Cirnix 활성화"
+                                          Margin="14,0,14,6"
+                                          Click="chk_Main_CirnixEnabled_Click"/>
+
+                                <Button x:Name="btn_LaunchWc3_Main" Content="▶  WC3 실행"
+                                        Style="{StaticResource SidebarBtn}"
+                                        Click="btn_LaunchWc3_Main_Click"/>
+                                <Button Content="⚙  Cirnix 설정"
+                                        Style="{StaticResource SidebarBtn}"
+                                        Click="btn_CirnixSettings_Click"/>
+                            </StackPanel>
+                        </Expander>
+
+                        
+
+
+                    </StackPanel>
+                </ScrollViewer>
+            </Border>
+
+            <!-- ─────────────────────────────────────── -->
+            <!--  MAIN CONTENT                           -->
+            <!-- ─────────────────────────────────────── -->
+            <Grid x:Name="ControlsGrid" Grid.Column="1"
+                  Background="{StaticResource BgPrimaryBrush}">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <!-- ── STAT CARDS ───────────────────── -->
+                <UniformGrid Grid.Row="0" Columns="4" Margin="12,12,12,10">
+
+                    <!-- 실행 시간 -->
+                    <Border Style="{StaticResource StatCard}">
+                        <StackPanel>
+                            <TextBlock x:Name="txtElapsedTime" Text="00:00"
+                                       FontSize="18" FontWeight="SemiBold"
+                                       Foreground="{StaticResource TextPrimaryBrush}"
+                                       Margin="0,0,0,2"/>
+                            <TextBlock Text="실행 시간"
+                                       Foreground="{StaticResource TextSecondaryBrush}"
+                                       FontSize="10"/>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- 총 목재 -->
+                    <Border Style="{StaticResource StatCard}">
+                        <StackPanel>
+                            <TextBlock x:Name="txtTotalWood" Text="0"
+                                       FontSize="18" FontWeight="SemiBold"
+                                       Foreground="{StaticResource TextPrimaryBrush}"
+                                       Margin="0,0,0,2"/>
+                            <TextBlock Text="총 목재"
+                                       Foreground="{StaticResource TextSecondaryBrush}"
+                                       FontSize="10"/>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- 시간당 목재 -->
+                    <Border Style="{StaticResource StatCard}">
+                        <StackPanel>
+                            <TextBlock x:Name="txtWoodPerHour" Text="0"
+                                       FontSize="18" FontWeight="SemiBold"
+                                       Foreground="{StaticResource TextPrimaryBrush}"
+                                       Margin="0,0,0,2"/>
+                            <TextBlock Text="시간당 목재"
+                                       Foreground="{StaticResource TextSecondaryBrush}"
+                                       FontSize="10"/>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- 총 처치수 -->
+                    <Border Margin="0,0,2,0" CornerRadius="10" Padding="14,12"
+                            Background="{StaticResource BgCardBrush}">
+                        <StackPanel>
+                            <TextBlock x:Name="txtTotalKills" Text="0"
+                                       FontSize="18" FontWeight="SemiBold"
+                                       Foreground="{StaticResource TextPrimaryBrush}"
+                                       Margin="0,0,0,2"/>
+                            <TextBlock Text="총 처치수"
+                                       Foreground="{StaticResource TextSecondaryBrush}"
+                                       FontSize="10"/>
+                        </StackPanel>
+                    </Border>
+
+                </UniformGrid>
+
+                <!-- ── BOSS STATS DATAGRID ────────── -->
+                <DataGrid x:Name="dgBossStats" Grid.Row="1"
+                          Margin="12,0,12,8"
+                          ItemsSource="{Binding FilteredBossStatsList}"
+                          AutoGenerateColumns="False"
+                          IsReadOnly="True"
+                          CanUserSortColumns="True"
+                          CanUserReorderColumns="False"
+                          SelectionUnit="FullRow">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="보스"     Binding="{Binding Name}"                                             Width="60"/>
+                        <DataGridTextColumn Header="평균"     Binding="{Binding AverageTime, StringFormat={}{0:%m}분 {0:%s}초}"   Width="*"/>
+                        <DataGridTextColumn Header="최대"     Binding="{Binding MaxTime,     StringFormat={}{0:%m}분 {0:%s}초}"   Width="*"/>
+                        <DataGridTextColumn Header="최소"     Binding="{Binding MinTime,     StringFormat={}{0:%m}분 {0:%s}초}"   Width="*"/>
+                        <DataGridTextColumn Header="처치횟수" Binding="{Binding KillCount}"                                       Width="*"/>
+                        <DataGridTextColumn Header="젠컷실패" Binding="{Binding Over2MinCount, StringFormat={}{0}회}"             Width="*"/>
+                        <DataGridTextColumn Header="미스율"   Binding="{Binding Over2MinRate,  StringFormat={}{0:0.0}%}"          Width="*"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+
+                <!-- ── LOG ──────────────────────────── -->
+                <TextBox x:Name="txt_log"
+                         Grid.Row="2"
+                         Margin="12,0,12,10"
+                         Height="88"
+                         TextWrapping="Wrap"
+                         IsReadOnly="True"
+                         AcceptsReturn="True"
+                         VerticalScrollBarVisibility="Auto"
+                         FontFamily="Consolas"
+                         FontSize="11"/>
+
+            </Grid>
+        </Grid>
+    </Grid>
+</Window>

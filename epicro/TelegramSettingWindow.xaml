@@ -1,0 +1,40 @@
+<Window x:Class="epicro.TelegramSettingWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="텔레그램 연동" Width="340" SizeToContent="Height"
+        MinWidth="320" MinHeight="180"
+        ResizeMode="CanResize" WindowStartupLocation="CenterOwner"
+        Background="{StaticResource BgPrimaryBrush}">
+
+    <StackPanel Margin="14">
+
+        <TextBlock Text="봇 토큰" Foreground="{StaticResource TextSecondaryBrush}"
+                   FontSize="11" Margin="0,0,0,4"/>
+        <TextBox x:Name="txt_BotToken" Margin="0,0,0,10"
+                 ToolTip="@BotFather에서 발급받은 봇 토큰"/>
+
+        <TextBlock Text="내 Chat ID" Foreground="{StaticResource TextSecondaryBrush}"
+                   FontSize="11" Margin="0,0,0,4"/>
+        <TextBox x:Name="txt_ChatId" Margin="0,0,0,4"
+                 ToolTip="여러 명은 쉼표(,)로 구분  예: 123456789,987654321"/>
+
+        <TextBlock Foreground="{StaticResource TextSecondaryBrush}" FontSize="10"
+                   TextWrapping="Wrap" Margin="0,0,0,10">
+            Chat ID 확인: 봇에게 <Run FontWeight="Bold">/chatid</Run> 명령어를 전송하세요.
+            여러 명은 쉼표(,)로 구분.
+        </TextBlock>
+
+        <Button x:Name="btnToggle" Height="30" Margin="0,0,0,14"
+                Click="btnToggle_Click"/>
+
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+            <Button x:Name="btnTest"  Content="테스트 전송" Width="90"
+                    Margin="0,0,6,0" Background="#2E2F4A" Click="btnTest_Click"/>
+            <Button x:Name="btnSave"  Content="저장" Width="65"
+                    Margin="0,0,6,0" Click="btnSave_Click"/>
+            <Button Content="닫기" Width="65"
+                    Background="#3A3A5A" Click="btnClose_Click"/>
+        </StackPanel>
+
+    </StackPanel>
+</Window>

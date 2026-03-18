@@ -1,0 +1,33 @@
+﻿<Window x:Class="epicro.ItemMixWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:epicro"
+        mc:Ignorable="d"
+        Title="조합재료 확인" Height="600" Width="900"
+        MinWidth="500" MinHeight="350"
+        WindowStartupLocation="CenterOwner"
+        Background="{StaticResource BgPrimaryBrush}">
+    <Grid Margin="10">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="2*" />
+            <ColumnDefinition Width="3*" />
+        </Grid.ColumnDefinitions>
+
+        <!-- 왼쪽: 아이템 선택 (Expander + CheckBox) -->
+        <ScrollViewer VerticalScrollBarVisibility="Auto">
+            <StackPanel x:Name="CategoryPanel" />
+        </ScrollViewer>
+
+        <!-- 오른쪽: 재료 요약 -->
+        <GroupBox Header="필요한 재료 요약" Grid.Column="1" Margin="10,0,0,0">
+            <DataGrid x:Name="MaterialGrid" AutoGenerateColumns="False" CanUserAddRows="False" HeadersVisibility="Column" IsReadOnly="True">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="재료 이름" Binding="{Binding Key}" Width="*" />
+                    <DataGridTextColumn Header="필요 수량" Binding="{Binding Value}" Width="Auto" />
+                </DataGrid.Columns>
+            </DataGrid>
+        </GroupBox>
+    </Grid>
+</Window>

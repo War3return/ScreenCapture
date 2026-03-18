@@ -1,0 +1,25 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "epicro Debug Build",
+      "runtimeExecutable": "powershell",
+      "runtimeArgs": [
+        "-NoProfile",
+        "-Command",
+        "& 'C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\MSBuild\\Current\\Bin\\MSBuild.exe' 'epicro\\epicro.csproj' /t:Restore /v:minimal; & 'C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\MSBuild\\Current\\Bin\\MSBuild.exe' 'epicro\\epicro.csproj' /p:Configuration=Debug /p:Platform=AnyCPU /p:RuntimeIdentifier=win /v:minimal"
+      ],
+      "port": 0
+    },
+    {
+      "name": "epicro Release Build",
+      "runtimeExecutable": "powershell",
+      "runtimeArgs": [
+        "-NoProfile",
+        "-Command",
+        "& 'C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\MSBuild\\Current\\Bin\\MSBuild.exe' 'epicro\\epicro.csproj' /t:Restore /v:minimal; & 'C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\MSBuild\\Current\\Bin\\MSBuild.exe' 'epicro\\epicro.csproj' /p:Configuration=Release /p:Platform=AnyCPU /p:RuntimeIdentifier=win /v:minimal"
+      ],
+      "port": 0
+    }
+  ]
+}

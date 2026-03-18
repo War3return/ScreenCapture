@@ -1,0 +1,759 @@
+<Window x:Class="epicro.CirnixSettingWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        Title="Cirnix 설정" Height="560" Width="720"
+        ResizeMode="NoResize"
+        WindowStartupLocation="CenterOwner"
+        Background="{StaticResource BgPrimaryBrush}"
+        Loaded="Window_Loaded"
+        KeyDown="Window_KeyDown">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="44"/>
+        </Grid.RowDefinitions>
+
+        <!-- 탭 컨트롤 -->
+        <TabControl Grid.Row="0" Margin="10,10,10,6"
+                    Background="{StaticResource BgPrimaryBrush}"
+                    BorderBrush="{StaticResource BorderBrush_}">
+
+            <!-- ══ 탭 1: 게임 패치 ══ -->
+            <TabItem Header="게임 패치">
+                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                    <StackPanel Margin="12,10,12,10">
+
+                        <!-- 기능 토글 -->
+                        <Border Background="{StaticResource BgCardBrush}"
+                                CornerRadius="8" Padding="12,10" Margin="0,0,0,8">
+                            <StackPanel>
+                                <TextBlock Text="기능" FontSize="10"
+                                           Foreground="{StaticResource TextSecondaryBrush}"
+                                           Margin="0,0,0,6"/>
+                                <CheckBox x:Name="chk_HPView" Content="HP 표시" Margin="0,3" Click="chk_HPView_Click"/>
+                            </StackPanel>
+                        </Border>
+
+                        <!-- 카메라 설정 -->
+                        <Border Background="{StaticResource BgCardBrush}"
+                                CornerRadius="8" Padding="12,10" Margin="0,0,0,8">
+                            <StackPanel x:Name="pnl_Camera">
+                                    <TextBlock Text="카메라 거리" FontSize="10"
+                                               Foreground="{StaticResource TextSecondaryBrush}" Margin="0,0,0,3"/>
+                                    <Grid Margin="0,0,0,8">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="5"/>
+                                            <ColumnDefinition Width="44"/>
+                                        </Grid.ColumnDefinitions>
+                                        <TextBox x:Name="txt_CamDist" Grid.Column="0"/>
+                                        <Button  Grid.Column="2" Content="적용" Click="btn_CamDist_Click"/>
+                                    </Grid>
+                                    <TextBlock Text="카메라 X각도" FontSize="10"
+                                               Foreground="{StaticResource TextSecondaryBrush}" Margin="0,0,0,3"/>
+                                    <Grid Margin="0,0,0,8">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="5"/>
+                                            <ColumnDefinition Width="44"/>
+                                        </Grid.ColumnDefinitions>
+                                        <TextBox x:Name="txt_CamAngleX" Grid.Column="0"/>
+                                        <Button  Grid.Column="2" Content="적용" Click="btn_CamAngleX_Click"/>
+                                    </Grid>
+                                    <TextBlock Text="카메라 Y각도" FontSize="10"
+                                               Foreground="{StaticResource TextSecondaryBrush}" Margin="0,0,0,3"/>
+                                    <Grid Margin="0,0,0,8">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="5"/>
+                                            <ColumnDefinition Width="44"/>
+                                        </Grid.ColumnDefinitions>
+                                        <TextBox x:Name="txt_CamAngleY" Grid.Column="0"/>
+                                        <Button  Grid.Column="2" Content="적용" Click="btn_CamAngleY_Click"/>
+                                    </Grid>
+                                    <Button x:Name="btn_CamReset" Content="카메라 초기화"
+                                            Click="btn_CamReset_Click"/>
+                            </StackPanel>
+                        </Border>
+
+                    </StackPanel>
+                </ScrollViewer>
+            </TabItem>
+
+            <!-- ══ 탭 2: 자동 기능 ══ -->
+            <TabItem Header="자동 기능">
+                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                    <StackPanel Margin="12,10,12,10">
+
+                        <!-- 자동 RG -->
+                        <Border Background="{StaticResource BgCardBrush}"
+                                CornerRadius="8" Padding="12,10" Margin="0,0,0,8">
+                            <StackPanel>
+                                <TextBlock Text="자동 RG" FontWeight="SemiBold" FontSize="11"
+                                           Foreground="{StaticResource TextPrimaryBrush}" Margin="0,0,0,8"/>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="8"/>
+                                        <ColumnDefinition Width="60"/>
+                                        <ColumnDefinition Width="6"/>
+                                        <ColumnDefinition Width="60"/>
+                                    </Grid.ColumnDefinitions>
+                                    <StackPanel Grid.Column="0">
+                                        <TextBlock Text="반복 횟수 (0=무한)" FontSize="10"
+                                                   Foreground="{StaticResource TextSecondaryBrush}" Margin="0,0,0,3"/>
+                                        <TextBox x:Name="txt_AutoRG_Count"/>
+                                    </StackPanel>
+                                    <Button x:Name="btn_AutoRG_Start" Grid.Column="2"
+                                            Content="시작" VerticalAlignment="Bottom"
+                                            Click="btn_AutoRG_Start_Click"/>
+                                    <Button x:Name="btn_AutoRG_Stop"  Grid.Column="4"
+                                            Content="중지" VerticalAlignment="Bottom"
+                                            Click="btn_AutoRG_Stop_Click"/>
+                                </Grid>
+                                <TextBlock x:Name="lbl_AutoRG_Status" Text="대기 중"
+                                           FontSize="10" Margin="0,6,0,0"
+                                           Foreground="{StaticResource TextSecondaryBrush}"
+                                           HorizontalAlignment="Center"/>
+                            </StackPanel>
+                        </Border>
+
+                        <!-- 자동 시작 -->
+                        <Border Background="{StaticResource BgCardBrush}"
+                                CornerRadius="8" Padding="12,10" Margin="0,0,0,8">
+                            <StackPanel>
+                                <TextBlock Text="자동 시작" FontWeight="SemiBold" FontSize="11"
+                                           Foreground="{StaticResource TextPrimaryBrush}" Margin="0,0,0,8"/>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="8"/>
+                                        <ColumnDefinition Width="60"/>
+                                        <ColumnDefinition Width="6"/>
+                                        <ColumnDefinition Width="60"/>
+                                    </Grid.ColumnDefinitions>
+                                    <StackPanel Grid.Column="0">
+                                        <TextBlock Text="최소 인원" FontSize="10"
+                                                   Foreground="{StaticResource TextSecondaryBrush}" Margin="0,0,0,3"/>
+                                        <TextBox x:Name="txt_AutoStart_MinPlayers"/>
+                                    </StackPanel>
+                                    <Button x:Name="btn_AutoStart_Start" Grid.Column="2"
+                                            Content="시작" VerticalAlignment="Bottom"
+                                            Click="btn_AutoStart_Start_Click"/>
+                                    <Button x:Name="btn_AutoStart_Stop"  Grid.Column="4"
+                                            Content="중지" VerticalAlignment="Bottom"
+                                            Click="btn_AutoStart_Stop_Click"/>
+                                </Grid>
+                                <TextBlock x:Name="lbl_AutoStart_Status" Text="대기 중"
+                                           FontSize="10" Margin="0,6,0,0"
+                                           Foreground="{StaticResource TextSecondaryBrush}"
+                                           HorizontalAlignment="Center"/>
+                            </StackPanel>
+                        </Border>
+
+                        <!-- 자동 마우스 -->
+                        <Border Background="{StaticResource BgCardBrush}"
+                                CornerRadius="8" Padding="12,10">
+                            <StackPanel>
+                                <TextBlock Text="자동 마우스" FontWeight="SemiBold" FontSize="11"
+                                           Foreground="{StaticResource TextPrimaryBrush}" Margin="0,0,0,8"/>
+                                <CheckBox x:Name="chk_AutoMouse_Enable" Content="활성화"
+                                          Margin="0,0,0,8" Click="chk_AutoMouse_Enable_Click"/>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="8"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="8"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="8"/>
+                                        <ColumnDefinition Width="80"/>
+                                    </Grid.ColumnDefinitions>
+                                    <StackPanel Grid.Column="0">
+                                        <TextBlock Text="좌클릭 키" FontSize="10"
+                                                   Foreground="{StaticResource TextSecondaryBrush}" Margin="0,0,0,3"/>
+                                        <Button x:Name="btn_AutoMouse_Left"
+                                                FontSize="10" Padding="4,3"
+                                                ToolTip="클릭 후 키를 누르세요&#10;Delete/Backspace: 해제"
+                                                Click="btn_AutoMouse_Left_Click"/>
+                                    </StackPanel>
+                                    <StackPanel Grid.Column="2">
+                                        <TextBlock Text="우클릭 키" FontSize="10"
+                                                   Foreground="{StaticResource TextSecondaryBrush}" Margin="0,0,0,3"/>
+                                        <Button x:Name="btn_AutoMouse_Right"
+                                                FontSize="10" Padding="4,3"
+                                                ToolTip="클릭 후 키를 누르세요&#10;Delete/Backspace: 해제"
+                                                Click="btn_AutoMouse_Right_Click"/>
+                                    </StackPanel>
+                                    <StackPanel Grid.Column="4">
+                                        <TextBlock Text="종료 키" FontSize="10"
+                                                   Foreground="{StaticResource TextSecondaryBrush}" Margin="0,0,0,3"/>
+                                        <Button x:Name="btn_AutoMouse_End"
+                                                FontSize="10" Padding="4,3"
+                                                ToolTip="클릭 후 키를 누르세요&#10;Delete/Backspace: 해제"
+                                                Click="btn_AutoMouse_End_Click"/>
+                                    </StackPanel>
+                                    <StackPanel Grid.Column="6">
+                                        <TextBlock Text="간격 (ms)" FontSize="10"
+                                                   Foreground="{StaticResource TextSecondaryBrush}" Margin="0,0,0,3"/>
+                                        <TextBox x:Name="txt_AutoMouse_Interval"
+                                                 LostFocus="txt_AutoMouse_Interval_LostFocus"/>
+                                    </StackPanel>
+                                </Grid>
+                            </StackPanel>
+                        </Border>
+
+                    </StackPanel>
+                </ScrollViewer>
+            </TabItem>
+
+            <!-- ══ 탭 3: 방 관리 ══ -->
+            <TabItem Header="방 관리">
+                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                    <StackPanel Margin="12,10,12,10">
+
+                        <!-- 인원 알림 -->
+                        <Border Background="{StaticResource BgCardBrush}"
+                                CornerRadius="8" Padding="12,10" Margin="0,0,0,8">
+                            <StackPanel>
+                                <TextBlock Text="인원 알림" FontWeight="SemiBold" FontSize="11"
+                                           Foreground="{StaticResource TextPrimaryBrush}" Margin="0,0,0,8"/>
+                                <Grid Margin="0,0,0,8">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="8"/>
+                                        <ColumnDefinition Width="80"/>
+                                        <ColumnDefinition Width="8"/>
+                                        <ColumnDefinition Width="44"/>
+                                        <ColumnDefinition Width="4"/>
+                                        <ColumnDefinition Width="44"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Text="최대 인원:" Grid.Column="0" VerticalAlignment="Center"
+                                               Foreground="{StaticResource TextSecondaryBrush}" FontSize="10"/>
+                                    <TextBox x:Name="txt_MaxRoom_Count" Grid.Column="2"/>
+                                    <Button x:Name="btn_MaxRoom_Start" Grid.Column="4"
+                                            Content="시작" Click="btn_MaxRoom_Start_Click"/>
+                                    <Button x:Name="btn_MaxRoom_Stop"  Grid.Column="6"
+                                            Content="중지" Click="btn_MaxRoom_Stop_Click"/>
+                                </Grid>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="8"/>
+                                        <ColumnDefinition Width="80"/>
+                                        <ColumnDefinition Width="8"/>
+                                        <ColumnDefinition Width="44"/>
+                                        <ColumnDefinition Width="4"/>
+                                        <ColumnDefinition Width="44"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Text="최소 인원:" Grid.Column="0" VerticalAlignment="Center"
+                                               Foreground="{StaticResource TextSecondaryBrush}" FontSize="10"/>
+                                    <TextBox x:Name="txt_MinRoom_Count" Grid.Column="2"/>
+                                    <Button x:Name="btn_MinRoom_Start" Grid.Column="4"
+                                            Content="시작" Click="btn_MinRoom_Start_Click"/>
+                                    <Button x:Name="btn_MinRoom_Stop"  Grid.Column="6"
+                                            Content="중지" Click="btn_MinRoom_Stop_Click"/>
+                                </Grid>
+                            </StackPanel>
+                        </Border>
+
+                        <!-- 방 입장/생성 -->
+                        <Border Background="{StaticResource BgCardBrush}"
+                                CornerRadius="8" Padding="12,10" Margin="0,0,0,8">
+                            <StackPanel>
+                                <TextBlock Text="방 입장 / 생성" FontWeight="SemiBold" FontSize="11"
+                                           Foreground="{StaticResource TextPrimaryBrush}" Margin="0,0,0,8"/>
+                                <TextBlock Text="방 이름" FontSize="10"
+                                           Foreground="{StaticResource TextSecondaryBrush}" Margin="0,0,0,3"/>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="6"/>
+                                        <ColumnDefinition Width="50"/>
+                                        <ColumnDefinition Width="6"/>
+                                        <ColumnDefinition Width="50"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBox x:Name="txt_RoomName" Grid.Column="0"/>
+                                    <Button x:Name="btn_RoomJoin"   Grid.Column="2"
+                                            Content="입장" Click="btn_RoomJoin_Click"/>
+                                    <Button x:Name="btn_RoomCreate" Grid.Column="4"
+                                            Content="생성" Click="btn_RoomCreate_Click"/>
+                                </Grid>
+                            </StackPanel>
+                        </Border>
+
+                        <!-- 채널 채팅 -->
+                        <Border Background="{StaticResource BgCardBrush}"
+                                CornerRadius="8" Padding="12,10">
+                            <StackPanel>
+                                <TextBlock Text="채널 채팅" FontWeight="SemiBold" FontSize="11"
+                                           Foreground="{StaticResource TextPrimaryBrush}" Margin="0,0,0,8"/>
+                                <StackPanel Orientation="Horizontal">
+                                    <Button x:Name="btn_ChannelChatOpen" Content="채팅창 열기"
+                                            Width="90" Click="btn_ChannelChatOpen_Click"/>
+                                    <Button x:Name="btn_ChannelRefresh"  Content="새로고침"
+                                            Width="70" Margin="8,0,0,0" Click="btn_ChannelRefresh_Click"/>
+                                </StackPanel>
+                            </StackPanel>
+                        </Border>
+
+                    </StackPanel>
+                </ScrollViewer>
+            </TabItem>
+
+            <!-- ══ 탭: 세이브 ══ -->
+            <TabItem Header="세이브">
+                <Grid Margin="10">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="150"/>
+                        <ColumnDefinition Width="8"/>
+                        <ColumnDefinition Width="150"/>
+                        <ColumnDefinition Width="8"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <!-- RPG 리스트 -->
+                    <DockPanel Grid.Row="0" Grid.Column="0">
+                        <TextBlock DockPanel.Dock="Top" Text="RPG 리스트"
+                                   FontSize="10" Foreground="{StaticResource TextSecondaryBrush}"
+                                   Margin="0,0,0,4"/>
+                        <Button DockPanel.Dock="Bottom" x:Name="save_btn_RpgRefresh" Content="새로고침"
+                                Margin="0,4,0,0" Click="save_btn_RpgRefresh_Click"/>
+                        <ListBox x:Name="save_lst_RpgList"
+                                 DisplayMemberPath="DisplayName"
+                                 SelectionChanged="save_lst_RpgList_SelectionChanged"/>
+                    </DockPanel>
+
+                    <!-- 저장 분류 리스트 -->
+                    <DockPanel Grid.Row="0" Grid.Column="2">
+                        <TextBlock DockPanel.Dock="Top" Text="저장 분류 리스트"
+                                   FontSize="10" Foreground="{StaticResource TextSecondaryBrush}"
+                                   Margin="0,0,0,4"/>
+                        <ListBox x:Name="save_lst_CategoryList"
+                                 SelectionChanged="save_lst_CategoryList_SelectionChanged"/>
+                    </DockPanel>
+
+                    <!-- 설정 패널 -->
+                    <ScrollViewer Grid.Row="0" Grid.Column="4" VerticalScrollBarVisibility="Auto">
+                        <StackPanel>
+
+                            <!-- RPG 설정 -->
+                            <Border Background="{StaticResource BgCardBrush}"
+                                    CornerRadius="8" Padding="12,10" Margin="0,0,0,8">
+                                <StackPanel>
+                                    <TextBlock Text="RPG 설정" FontWeight="SemiBold" FontSize="11"
+                                               Foreground="{StaticResource TextPrimaryBrush}" Margin="0,0,0,8"/>
+                                    <TextBlock Text="한글" FontSize="10"
+                                               Foreground="{StaticResource TextSecondaryBrush}" Margin="0,0,0,2"/>
+                                    <TextBox x:Name="save_txt_RpgNameKR" Margin="0,0,0,6"/>
+                                    <TextBlock Text="영문" FontSize="10"
+                                               Foreground="{StaticResource TextSecondaryBrush}" Margin="0,0,0,2"/>
+                                    <TextBox x:Name="save_txt_RpgNameEN" Margin="0,0,0,6"/>
+                                    <TextBlock Text="경로" FontSize="10"
+                                               Foreground="{StaticResource TextSecondaryBrush}" Margin="0,0,0,2"/>
+                                    <Grid Margin="0,0,0,8">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="4"/>
+                                            <ColumnDefinition Width="28"/>
+                                        </Grid.ColumnDefinitions>
+                                        <TextBox x:Name="save_txt_RpgPath" Grid.Column="0" IsReadOnly="True"/>
+                                        <Button Grid.Column="2" Content="..." Click="save_btn_BrowsePath_Click"/>
+                                    </Grid>
+                                    <UniformGrid Columns="3">
+                                        <Button Content="추가"      Margin="0,0,2,0" Click="save_btn_RpgAdd_Click"/>
+                                        <Button Content="제거"      Margin="2,0,2,0" Click="save_btn_RpgRemove_Click"/>
+                                        <Button Content="폴더 열기" Margin="2,0,0,0" Click="save_btn_RpgOpenFolder_Click"/>
+                                    </UniformGrid>
+                                </StackPanel>
+                            </Border>
+
+                            <!-- 저장 분류 설정 -->
+                            <Border Background="{StaticResource BgCardBrush}"
+                                    CornerRadius="8" Padding="12,10">
+                                <StackPanel>
+                                    <TextBlock Text="저장 분류 설정" FontWeight="SemiBold" FontSize="11"
+                                               Foreground="{StaticResource TextPrimaryBrush}" Margin="0,0,0,8"/>
+                                    <TextBlock Text="이름" FontSize="10"
+                                               Foreground="{StaticResource TextSecondaryBrush}" Margin="0,0,0,2"/>
+                                    <TextBox x:Name="save_txt_CategoryName" Margin="0,0,0,8"/>
+                                    <UniformGrid Columns="3">
+                                        <Button Content="추가"      Margin="0,0,2,0" Click="save_btn_CategoryAdd_Click"/>
+                                        <Button Content="삭제"      Margin="2,0,2,0" Click="save_btn_CategoryDelete_Click"/>
+                                        <Button Content="폴더 열기" Margin="2,0,0,0" Click="save_btn_CategoryOpenFolder_Click"/>
+                                    </UniformGrid>
+                                </StackPanel>
+                            </Border>
+
+                        </StackPanel>
+                    </ScrollViewer>
+
+                    <!-- 하단 지정 바 -->
+                    <Border Grid.Row="1" Grid.ColumnSpan="5"
+                            Background="{StaticResource BgCardBrush}"
+                            CornerRadius="8" Padding="10,8" Margin="0,8,0,0">
+                        <DockPanel>
+                            <Button DockPanel.Dock="Right" Content="지정"
+                                    Width="70" Click="save_btn_SetCurrent_Click"/>
+                            <StackPanel VerticalAlignment="Center" Margin="0,0,10,0">
+                                <TextBlock Text="세이브 저장 위치"
+                                           FontSize="10" Foreground="{StaticResource TextSecondaryBrush}"/>
+                                <TextBlock x:Name="save_lbl_CurrentDesignation"
+                                           Text="(지정 없음)" FontSize="11"
+                                           Foreground="{StaticResource TextPrimaryBrush}"/>
+                            </StackPanel>
+                        </DockPanel>
+                    </Border>
+                </Grid>
+            </TabItem>
+
+            <!-- ══ 탭 4: 채팅 핫키 ══ -->
+            <TabItem Header="채팅 핫키">
+                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                    <Border Background="{StaticResource BgCardBrush}"
+                            CornerRadius="8" Padding="12,10" Margin="12,10,12,10">
+                        <StackPanel>
+                            <Grid Margin="0,0,0,6">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="70"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="46"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Grid.Column="0" Text="단축키"    FontSize="10"
+                                           Foreground="{StaticResource TextSecondaryBrush}"/>
+                                <TextBlock Grid.Column="1" Text="메시지"    FontSize="10"
+                                           Foreground="{StaticResource TextSecondaryBrush}"/>
+                                <TextBlock Grid.Column="2" Text="등록"      FontSize="10"
+                                           Foreground="{StaticResource TextSecondaryBrush}"
+                                           HorizontalAlignment="Center"/>
+                            </Grid>
+                            <StackPanel x:Name="pnl_ChatHotkeys">
+                                <!-- 코드비하인드에서 동적 생성 -->
+                            </StackPanel>
+                        </StackPanel>
+                    </Border>
+                </ScrollViewer>
+            </TabItem>
+
+
+            <!-- ══ 탭 6: 명령어 프리셋 ══ -->
+            <TabItem Header="명령어 프리셋">
+                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                    <StackPanel Margin="12,10,12,10">
+
+                        <!-- GlobalDelay + 기본 프리셋 선택 -->
+                        <Border Background="{StaticResource BgCardBrush}"
+                                CornerRadius="8" Padding="12,10" Margin="0,0,0,8">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="16"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+
+                                <!-- GlobalDelay -->
+                                <StackPanel Grid.Column="0">
+                                    <TextBlock Text="전송 간격 (ms)" FontSize="10"
+                                               Foreground="{StaticResource TextSecondaryBrush}" Margin="0,0,0,3"/>
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="5"/>
+                                            <ColumnDefinition Width="44"/>
+                                        </Grid.ColumnDefinitions>
+                                        <TextBox x:Name="txt_GlobalDelay" Grid.Column="0"/>
+                                        <Button  Grid.Column="2" Content="적용"
+                                                 Click="btn_GlobalDelay_Click"/>
+                                    </Grid>
+                                </StackPanel>
+
+                                <!-- 기본 프리셋 선택 -->
+                                <StackPanel Grid.Column="2">
+                                    <TextBlock Text="!cmd 기본 프리셋" FontSize="10"
+                                               Foreground="{StaticResource TextSecondaryBrush}" Margin="0,0,0,6"/>
+                                    <StackPanel Orientation="Horizontal">
+                                        <RadioButton x:Name="rdo_Preset1" Content="1" GroupName="CmdPreset"
+                                                     Margin="0,0,12,0" Checked="rdo_Preset_Checked"/>
+                                        <RadioButton x:Name="rdo_Preset2" Content="2" GroupName="CmdPreset"
+                                                     Margin="0,0,12,0" Checked="rdo_Preset_Checked"/>
+                                        <RadioButton x:Name="rdo_Preset3" Content="3" GroupName="CmdPreset"
+                                                     Checked="rdo_Preset_Checked"/>
+                                    </StackPanel>
+                                </StackPanel>
+                            </Grid>
+                        </Border>
+
+                        <!-- 프리셋 탭 (1 / 2 / 3) -->
+                        <TabControl Margin="0,0,0,8"
+                                    Background="{StaticResource BgCardBrush}"
+                                    BorderThickness="0">
+                            <TabControl.Resources>
+                                <!-- 내부 탭 헤더 스타일 -->
+                                <Style TargetType="TabItem">
+                                    <Setter Property="Padding"       Value="18,5"/>
+                                    <Setter Property="FontSize"      Value="12"/>
+                                    <Setter Property="FontWeight"    Value="SemiBold"/>
+                                    <Setter Property="Foreground"    Value="{StaticResource TextSecondaryBrush}"/>
+                                    <Setter Property="Background"    Value="Transparent"/>
+                                    <Setter Property="BorderThickness" Value="0"/>
+                                    <Setter Property="Template">
+                                        <Setter.Value>
+                                            <ControlTemplate TargetType="TabItem">
+                                                <Border x:Name="bd"
+                                                        Background="{TemplateBinding Background}"
+                                                        CornerRadius="6,6,0,0"
+                                                        Margin="0,4,2,0"
+                                                        Padding="{TemplateBinding Padding}">
+                                                    <ContentPresenter ContentSource="Header"
+                                                                      HorizontalAlignment="Center"
+                                                                      VerticalAlignment="Center"/>
+                                                </Border>
+                                                <ControlTemplate.Triggers>
+                                                    <Trigger Property="IsSelected" Value="True">
+                                                        <Setter TargetName="bd" Property="Background"
+                                                                Value="{StaticResource AccentBrush}"/>
+                                                        <Setter Property="Foreground"
+                                                                Value="{StaticResource TextPrimaryBrush}"/>
+                                                    </Trigger>
+                                                    <Trigger Property="IsMouseOver" Value="True">
+                                                        <Setter TargetName="bd" Property="Opacity" Value="0.85"/>
+                                                    </Trigger>
+                                                </ControlTemplate.Triggers>
+                                            </ControlTemplate>
+                                        </Setter.Value>
+                                    </Setter>
+                                </Style>
+                            </TabControl.Resources>
+
+                            <!-- ── 프리셋 1 ── -->
+                            <TabItem Header="1">
+                                <StackPanel Margin="12,10,12,10">
+                                    <Grid Margin="0,0,0,6">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="6"/>
+                                            <ColumnDefinition Width="60"/>
+                                            <ColumnDefinition Width="6"/>
+                                            <ColumnDefinition Width="60"/>
+                                        </Grid.ColumnDefinitions>
+                                        <Button Grid.Column="2" Content="저장"
+                                                Click="btn_SavePreset1_Click"/>
+                                        <Button Grid.Column="4" Content="실행"
+                                                Click="btn_RunPreset1_Click"/>
+                                    </Grid>
+                                    <TextBox x:Name="txt_Preset1" Height="120"
+                                             AcceptsReturn="True" TextWrapping="Wrap"
+                                             VerticalScrollBarVisibility="Auto"
+                                             FontFamily="Consolas" FontSize="11"/>
+                                </StackPanel>
+                            </TabItem>
+
+                            <!-- ── 프리셋 2 ── -->
+                            <TabItem Header="2">
+                                <StackPanel Margin="12,10,12,10">
+                                    <Grid Margin="0,0,0,6">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="6"/>
+                                            <ColumnDefinition Width="60"/>
+                                            <ColumnDefinition Width="6"/>
+                                            <ColumnDefinition Width="60"/>
+                                        </Grid.ColumnDefinitions>
+                                        <Button Grid.Column="2" Content="저장"
+                                                Click="btn_SavePreset2_Click"/>
+                                        <Button Grid.Column="4" Content="실행"
+                                                Click="btn_RunPreset2_Click"/>
+                                    </Grid>
+                                    <TextBox x:Name="txt_Preset2" Height="120"
+                                             AcceptsReturn="True" TextWrapping="Wrap"
+                                             VerticalScrollBarVisibility="Auto"
+                                             FontFamily="Consolas" FontSize="11"/>
+                                </StackPanel>
+                            </TabItem>
+
+                            <!-- ── 프리셋 3 ── -->
+                            <TabItem Header="3">
+                                <StackPanel Margin="12,10,12,10">
+                                    <Grid Margin="0,0,0,6">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="6"/>
+                                            <ColumnDefinition Width="60"/>
+                                            <ColumnDefinition Width="6"/>
+                                            <ColumnDefinition Width="60"/>
+                                        </Grid.ColumnDefinitions>
+                                        <Button Grid.Column="2" Content="저장"
+                                                Click="btn_SavePreset3_Click"/>
+                                        <Button Grid.Column="4" Content="실행"
+                                                Click="btn_RunPreset3_Click"/>
+                                    </Grid>
+                                    <TextBox x:Name="txt_Preset3" Height="120"
+                                             AcceptsReturn="True" TextWrapping="Wrap"
+                                             VerticalScrollBarVisibility="Auto"
+                                             FontFamily="Consolas" FontSize="11"/>
+                                </StackPanel>
+                            </TabItem>
+                        </TabControl>
+
+                        <!-- 도움말 -->
+                        <Border Background="{StaticResource BgCardBrush}"
+                                CornerRadius="8" Padding="12,8" Margin="0,8,0,0">
+                            <TextBlock FontSize="10" Foreground="{StaticResource TextSecondaryBrush}"
+                                       TextWrapping="Wrap">
+                                <Run Text="• 채팅창에 !cmd 입력 시 기본 프리셋이 순서대로 전송됩니다."/>
+                                <LineBreak/>
+                                <Run Text="• !cmd 1 / !cmd 2 / !cmd 3 으로 특정 프리셋 지정 가능."/>
+                                <LineBreak/>
+                                <Run Text="• #silent  줄을 첫 번째에 추가하면 알림 없이 실행됩니다."/>
+                                <LineBreak/>
+                                <Run Text="• #delay 500  줄로 해당 위치에서 지연(ms)을 추가할 수 있습니다."/>
+                            </TextBlock>
+                        </Border>
+
+                    </StackPanel>
+                </ScrollViewer>
+            </TabItem>
+
+            <!-- ══ 탭 7: 명령어 목록 ══ -->
+            <TabItem Header="명령어 목록">
+                <Border Background="{StaticResource BgCardBrush}"
+                        CornerRadius="8" Margin="10,10,10,10">
+                    <ScrollViewer VerticalScrollBarVisibility="Auto">
+                        <StackPanel x:Name="pnl_CmdList" Margin="12,10,12,10">
+                            <!-- 코드비하인드에서 동적 생성 -->
+                        </StackPanel>
+                    </ScrollViewer>
+                </Border>
+            </TabItem>
+
+            <!-- ══ 탭 8: 기타 설정 ══ -->
+            <TabItem Header="기타 설정">
+                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                    <StackPanel Margin="12,10,12,10">
+
+                        <!-- WC3 실행 -->
+                        <Border Background="{StaticResource BgCardBrush}"
+                                CornerRadius="8" Padding="12,10" Margin="0,0,0,8">
+                            <StackPanel>
+                                <TextBlock Text="WC3 실행" FontWeight="SemiBold" FontSize="11"
+                                           Foreground="{StaticResource TextPrimaryBrush}" Margin="0,0,0,8"/>
+
+                                <!-- 실행 파일 -->
+                                <TextBlock Text="실행 파일" FontSize="10"
+                                           Foreground="{StaticResource TextSecondaryBrush}" Margin="0,0,0,4"/>
+                                <Grid Margin="0,0,0,8">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="6"/>
+                                        <ColumnDefinition Width="60"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBox x:Name="txt_Wc3ExePath" Grid.Column="0"
+                                             ToolTip="war3.exe 또는 Warcraft III.exe 경로"
+                                             IsReadOnly="True"/>
+                                    <Button Grid.Column="2" Content="찾기"
+                                            Click="btn_Wc3PathBrowse_Click"/>
+                                </Grid>
+
+                                <!-- 실행 인수 -->
+                                <TextBlock Text="실행 인수" FontSize="10"
+                                           Foreground="{StaticResource TextSecondaryBrush}" Margin="0,0,0,4"/>
+                                <TextBox x:Name="txt_Wc3LaunchArgs" Margin="0,0,0,4"
+                                         ToolTip="예: -window -opengl"
+                                         LostFocus="txt_Wc3LaunchArgs_LostFocus"/>
+                                <TextBlock FontSize="10" Margin="0,0,0,10"
+                                           Foreground="{StaticResource TextSecondaryBrush}">
+                                    <Run Text="자주 쓰는 인수: "/>
+                                    <Run Text="-window" FontFamily="Consolas"/>
+                                    <Run Text=" | "/>
+                                    <Run Text="-opengl" FontFamily="Consolas"/>
+                                    <Run Text=" | "/>
+                                    <Run Text="-nativefullscr" FontFamily="Consolas"/>
+                                </TextBlock>
+
+                                <Button x:Name="btn_LaunchWc3" Content="▶  WC3 실행"
+                                        Click="btn_LaunchWc3_Click"/>
+                            </StackPanel>
+                        </Border>
+
+                        <!-- 리플레이 자동 저장 -->
+                        <Border Background="{StaticResource BgCardBrush}"
+                                CornerRadius="8" Padding="12,10" Margin="0,0,0,8">
+                            <StackPanel>
+                                <TextBlock Text="리플레이 자동 저장" FontWeight="SemiBold" FontSize="11"
+                                           Foreground="{StaticResource TextPrimaryBrush}" Margin="0,0,0,8"/>
+                                <CheckBox x:Name="chk_AutoReplay" Content="리플레이 자동 저장"
+                                          Margin="0,3" Click="chk_AutoReplay_Click"
+                                          ToolTip="게임 종료 시 LastReplay.w3g를 세이브 코드 기반 폴더로 자동 이동합니다."/>
+                                <CheckBox x:Name="chk_NoSavedReplay" Content="세이브 없이 종료된 리플레이 저장"
+                                          Margin="0,3" Click="chk_NoSavedReplay_Click"
+                                          ToolTip="세이브 코드 없이 종료된 경우 NoSavedReplay 폴더에 저장합니다."/>
+                                <TextBlock FontSize="10" Margin="0,6,0,0"
+                                           Foreground="{StaticResource TextSecondaryBrush}"
+                                           TextWrapping="Wrap">
+                                    <Run Text="• 세이브 저장 시: Replay\{맵}\{영웅}\{파일명}.w3g"/>
+                                    <LineBreak/>
+                                    <Run Text="• 세이브 없이 종료 시: Replay\NoSavedReplay\{날짜시간}.w3g"/>
+                                </TextBlock>
+                            </StackPanel>
+                        </Border>
+
+                        <Border Background="{StaticResource BgCardBrush}"
+                                CornerRadius="8" Padding="12,10" Margin="0,0,0,8">
+                            <StackPanel>
+                                <TextBlock Text="명령어" FontWeight="SemiBold" FontSize="11"
+                                           Foreground="{StaticResource TextPrimaryBrush}" Margin="0,0,0,8"/>
+                                <CheckBox x:Name="chk_CommandHide" Content="명령어 숨김"
+                                          Margin="0,3" Click="chk_CommandHide_Click"/>
+                            </StackPanel>
+                        </Border>
+                        <Border Background="{StaticResource BgCardBrush}"
+                                CornerRadius="8" Padding="12,10">
+                            <StackPanel>
+                                <TextBlock Text="메모리 최적화" FontWeight="SemiBold" FontSize="11"
+                                           Foreground="{StaticResource TextPrimaryBrush}" Margin="0,0,0,8"/>
+                                <CheckBox x:Name="chk_MemOptimize" Content="주기적 메모리 최적화"
+                                          Margin="0,0,0,4" Click="chk_MemOptimize_Click"/>
+                                <CheckBox x:Name="chk_OptimizeAfterGame" Content="게임 종료 후 자동 최적화"
+                                          Margin="0,0,0,8" Click="chk_OptimizeAfterGame_Click"/>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="8"/>
+                                        <ColumnDefinition Width="60"/>
+                                        <ColumnDefinition Width="8"/>
+                                        <ColumnDefinition Width="60"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Text="주기 (분):" Grid.Column="0" VerticalAlignment="Center"
+                                               Foreground="{StaticResource TextSecondaryBrush}" FontSize="10"/>
+                                    <TextBox x:Name="txt_MemOptCooldown" Grid.Column="2"
+                                             LostFocus="txt_MemOptCooldown_LostFocus"/>
+                                    <Button  x:Name="btn_MemOptimize_Now" Grid.Column="4"
+                                             Content="지금 실행" Click="btn_MemOptimize_Click"/>
+                                </Grid>
+                            </StackPanel>
+                        </Border>
+                    </StackPanel>
+                </ScrollViewer>
+            </TabItem>
+
+        </TabControl>
+
+        <!-- 하단 닫기 버튼 -->
+        <Border Grid.Row="1"
+                Background="{StaticResource BgSurfaceBrush}"
+                BorderBrush="{StaticResource BorderBrush_}"
+                BorderThickness="0,1,0,0">
+            <Button Content="닫기" HorizontalAlignment="Right"
+                    Width="70" Margin="0,0,14,0"
+                    Click="btn_Close_Click"/>
+        </Border>
+    </Grid>
+</Window>

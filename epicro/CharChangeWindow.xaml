@@ -1,0 +1,223 @@
+<Window x:Class="epicro.CharChangeWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="캐릭터변경 신청 양식" Width="600" Height="680"
+        MinWidth="500" MinHeight="500"
+        ResizeMode="CanResize" WindowStartupLocation="CenterOwner"
+        Background="{StaticResource BgPrimaryBrush}">
+
+    <Grid Margin="14">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>  <!-- 파일 선택 -->
+            <RowDefinition Height="*"/>     <!-- 본문 -->
+            <RowDefinition Height="Auto"/>  <!-- 복사 버튼 -->
+        </Grid.RowDefinitions>
+
+        <!-- ── 파일 선택 ── -->
+        <Border Grid.Row="0" Background="{StaticResource BgCardBrush}"
+                CornerRadius="8" Padding="10,8" Margin="0,0,0,8">
+            <DockPanel>
+                <Button DockPanel.Dock="Left" Content="📂  세이브 파일 선택"
+                        Width="140" Margin="0,0,10,0"
+                        Click="btn_CharFile_Click"/>
+                <TextBlock x:Name="lbl_CharFileName" Text="(파일 미선택)"
+                           FontSize="10" VerticalAlignment="Center"
+                           Foreground="{StaticResource TextSecondaryBrush}"
+                           TextTrimming="CharacterEllipsis"/>
+            </DockPanel>
+        </Border>
+
+        <!-- ── 본문: 좌(파싱 정보) / 우(양식 입력) ── -->
+        <Grid Grid.Row="1" Margin="0,0,0,8">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="200"/>
+                <ColumnDefinition Width="10"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <!-- 좌: 파싱된 캐릭터 정보 -->
+            <Border Grid.Column="0" Background="{StaticResource BgCardBrush}"
+                    CornerRadius="8" Padding="12,10">
+                <StackPanel>
+                    <TextBlock Text="현재 캐릭터 정보" FontSize="11" FontWeight="SemiBold"
+                               Foreground="{StaticResource TextSecondaryBrush}" Margin="0,0,0,8"/>
+
+                    <!-- ID / 캐릭터 / Lv -->
+                    <Grid Margin="0,0,0,6">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="40"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition/><RowDefinition/><RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <TextBlock Text="ID"      Grid.Row="0" Grid.Column="0" FontSize="10" Foreground="{StaticResource TextSecondaryBrush}" Margin="0,0,0,2"/>
+                        <TextBlock Text="캐릭터"  Grid.Row="1" Grid.Column="0" FontSize="10" Foreground="{StaticResource TextSecondaryBrush}" Margin="0,0,0,2"/>
+                        <TextBlock Text="Lv"      Grid.Row="2" Grid.Column="0" FontSize="10" Foreground="{StaticResource TextSecondaryBrush}"/>
+                        <TextBlock x:Name="lbl_CharId"   Grid.Row="0" Grid.Column="1" FontSize="10" Foreground="{StaticResource TextPrimaryBrush}" TextWrapping="Wrap" Margin="0,0,0,2"/>
+                        <TextBlock x:Name="lbl_CharName" Grid.Row="1" Grid.Column="1" FontSize="10" Foreground="{StaticResource TextPrimaryBrush}" TextWrapping="Wrap" Margin="0,0,0,2"/>
+                        <TextBlock x:Name="lbl_CharLv"   Grid.Row="2" Grid.Column="1" FontSize="10" Foreground="{StaticResource TextPrimaryBrush}"/>
+                    </Grid>
+
+                    <Separator Margin="0,2,0,6" Opacity="0.3"/>
+
+                    <!-- Str / Agi / Int / 부속성 -->
+                    <Grid Margin="0,0,0,6">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="40"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition/><RowDefinition/><RowDefinition/><RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <TextBlock Text="힘"     Grid.Row="0" Grid.Column="0" FontSize="10" Foreground="{StaticResource TextSecondaryBrush}" Margin="0,0,0,2"/>
+                        <TextBlock Text="민"     Grid.Row="1" Grid.Column="0" FontSize="10" Foreground="{StaticResource TextSecondaryBrush}" Margin="0,0,0,2"/>
+                        <TextBlock Text="지"     Grid.Row="2" Grid.Column="0" FontSize="10" Foreground="{StaticResource TextSecondaryBrush}" Margin="0,0,0,2"/>
+                        <TextBlock Text="부속성" Grid.Row="3" Grid.Column="0" FontSize="10" Foreground="{StaticResource TextSecondaryBrush}"/>
+                        <TextBlock x:Name="lbl_Str"     Grid.Row="0" Grid.Column="1" FontSize="10" Foreground="{StaticResource TextPrimaryBrush}" Margin="0,0,0,2"/>
+                        <TextBlock x:Name="lbl_Agi"     Grid.Row="1" Grid.Column="1" FontSize="10" Foreground="{StaticResource TextPrimaryBrush}" Margin="0,0,0,2"/>
+                        <TextBlock x:Name="lbl_Int"     Grid.Row="2" Grid.Column="1" FontSize="10" Foreground="{StaticResource TextPrimaryBrush}" Margin="0,0,0,2"/>
+                        <TextBlock x:Name="lbl_SubAttr" Grid.Row="3" Grid.Column="1" FontSize="10" Foreground="{StaticResource TextPrimaryBrush}"/>
+                    </Grid>
+
+                    <Separator Margin="0,2,0,6" Opacity="0.3"/>
+
+                    <!-- 장착 아이템 -->
+                    <TextBlock Text="장착 아이템" FontSize="10" FontWeight="SemiBold"
+                               Foreground="{StaticResource TextSecondaryBrush}" Margin="0,0,0,4"/>
+                    <TextBlock x:Name="lbl_Item1" FontSize="10" Foreground="{StaticResource TextPrimaryBrush}" TextWrapping="Wrap" Margin="0,0,0,2"/>
+                    <TextBlock x:Name="lbl_Item2" FontSize="10" Foreground="{StaticResource TextPrimaryBrush}" TextWrapping="Wrap" Margin="0,0,0,2"/>
+                    <TextBlock x:Name="lbl_Item3" FontSize="10" Foreground="{StaticResource TextPrimaryBrush}" TextWrapping="Wrap" Margin="0,0,0,2"/>
+                    <TextBlock x:Name="lbl_Item4" FontSize="10" Foreground="{StaticResource TextPrimaryBrush}" TextWrapping="Wrap" Margin="0,0,0,2"/>
+                    <TextBlock x:Name="lbl_Item5" FontSize="10" Foreground="{StaticResource TextPrimaryBrush}" TextWrapping="Wrap" Margin="0,0,0,2"/>
+                    <TextBlock x:Name="lbl_Item6" FontSize="10" Foreground="{StaticResource TextPrimaryBrush}" TextWrapping="Wrap"/>
+                </StackPanel>
+            </Border>
+
+            <!-- 우: 양식 입력 -->
+            <ScrollViewer Grid.Column="2" VerticalScrollBarVisibility="Auto">
+                <Border Background="{StaticResource BgCardBrush}"
+                        CornerRadius="8" Padding="12,10">
+                    <StackPanel>
+                        <TextBlock Text="양식 작성" FontSize="11" FontWeight="SemiBold"
+                                   Foreground="{StaticResource TextSecondaryBrush}" Margin="0,0,0,10"/>
+
+                        <!-- 변경권 종류 -->
+                        <TextBlock Text="변경권 종류" FontSize="10" Foreground="{StaticResource TextSecondaryBrush}" Margin="0,0,0,3"/>
+                        <ComboBox x:Name="cmb_TicketType" Margin="0,0,0,8"
+                                  SelectionChanged="cmb_TicketType_SelectionChanged">
+                            <ComboBoxItem Content="1분기 캐변권" IsSelected="True"/>
+                            <ComboBoxItem Content="2분기 캐변권"/>
+                            <ComboBoxItem Content="3분기 캐변권"/>
+                            <ComboBoxItem Content="4분기 캐변권"/>
+                            <ComboBoxItem Content="헬퍼 캐변권"/>
+                            <ComboBoxItem Content="티켓 캐변권"/>
+                        </ComboBox>
+
+                        <!-- 티켓/헬퍼 전용 -->
+                        <StackPanel x:Name="pnl_TicketExtra" Visibility="Collapsed" Margin="0,0,0,8">
+                            <TextBlock Text="티켓 습득 닉네임" FontSize="10" Foreground="{StaticResource TextSecondaryBrush}" Margin="0,0,0,3"/>
+                            <TextBox x:Name="txt_TicketNick" Margin="0,0,0,6"/>
+                            <TextBlock Text="증거 링크" FontSize="10" Foreground="{StaticResource TextSecondaryBrush}" Margin="0,0,0,3"/>
+                            <TextBox x:Name="txt_TicketLink"/>
+                        </StackPanel>
+
+                        <Separator Margin="0,2,0,10" Opacity="0.3"/>
+
+                        <!-- 새 로드명 -->
+                        <TextBlock Text="변경할 로드명" FontSize="10" Foreground="{StaticResource TextSecondaryBrush}" Margin="0,0,0,3"/>
+                        <TextBox x:Name="txt_NewLoadId" Margin="0,0,0,10"/>
+
+                        <!-- 변경 캐릭터 -->
+                        <TextBlock Text="변경 캐릭터 (현재&gt;변경)" FontSize="10" Foreground="{StaticResource TextSecondaryBrush}" Margin="0,0,0,3"/>
+                        <TextBox x:Name="txt_CharChange" Margin="0,0,0,3" ToolTip="예: 나루토&gt;가이"/>
+                        <TextBlock Text="예) 나루토&gt;가이" FontSize="9"
+                                   Foreground="{StaticResource TextSecondaryBrush}" Margin="0,0,0,10"/>
+
+                        <!-- 부속성 -->
+                        <TextBlock Text="부속성" FontSize="10" Foreground="{StaticResource TextSecondaryBrush}" Margin="0,0,0,3"/>
+                        <TextBox x:Name="txt_NewSubAttr" Text="그대로" Margin="0,0,0,10"/>
+
+                        <!-- 아이템 변경 -->
+                        <TextBlock Text="아이템 변경 (변경 없으면 비워두세요)" FontSize="10" FontWeight="SemiBold"
+                                   Foreground="{StaticResource TextSecondaryBrush}" Margin="0,0,0,6"/>
+                        <Grid Margin="0,0,0,10">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="8"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition/><RowDefinition Height="4"/>
+                                <RowDefinition/><RowDefinition Height="4"/>
+                                <RowDefinition/><RowDefinition Height="4"/>
+                                <RowDefinition/><RowDefinition Height="4"/>
+                                <RowDefinition/><RowDefinition Height="4"/>
+                                <RowDefinition/>
+                            </Grid.RowDefinitions>
+                            <!-- 슬롯 1 -->
+                            <TextBlock x:Name="lbl_Slot1" Grid.Row="0" Grid.Column="0" FontSize="9"
+                                       Foreground="{StaticResource TextSecondaryBrush}" TextTrimming="CharacterEllipsis"/>
+                            <ComboBox  x:Name="cmb_Item1" Grid.Row="0" Grid.Column="2" FontSize="9" />
+                            <!-- 슬롯 2 -->
+                            <TextBlock x:Name="lbl_Slot2" Grid.Row="2" Grid.Column="0" FontSize="9"
+                                       Foreground="{StaticResource TextSecondaryBrush}" TextTrimming="CharacterEllipsis"/>
+                            <ComboBox  x:Name="cmb_Item2" Grid.Row="2" Grid.Column="2" FontSize="9" />
+                            <!-- 슬롯 3 -->
+                            <TextBlock x:Name="lbl_Slot3" Grid.Row="4" Grid.Column="0" FontSize="9"
+                                       Foreground="{StaticResource TextSecondaryBrush}" TextTrimming="CharacterEllipsis"/>
+                            <ComboBox  x:Name="cmb_Item3" Grid.Row="4" Grid.Column="2" FontSize="9" />
+                            <!-- 슬롯 4 -->
+                            <TextBlock x:Name="lbl_Slot4" Grid.Row="6" Grid.Column="0" FontSize="9"
+                                       Foreground="{StaticResource TextSecondaryBrush}" TextTrimming="CharacterEllipsis"/>
+                            <ComboBox  x:Name="cmb_Item4" Grid.Row="6" Grid.Column="2" FontSize="9" />
+                            <!-- 슬롯 5 -->
+                            <TextBlock x:Name="lbl_Slot5" Grid.Row="8" Grid.Column="0" FontSize="9"
+                                       Foreground="{StaticResource TextSecondaryBrush}" TextTrimming="CharacterEllipsis"/>
+                            <ComboBox  x:Name="cmb_Item5" Grid.Row="8" Grid.Column="2" FontSize="9" />
+                            <!-- 슬롯 6 -->
+                            <TextBlock x:Name="lbl_Slot6" Grid.Row="10" Grid.Column="0" FontSize="9"
+                                       Foreground="{StaticResource TextSecondaryBrush}" TextTrimming="CharacterEllipsis"/>
+                            <ComboBox  x:Name="cmb_Item6" Grid.Row="10" Grid.Column="2" FontSize="9" />
+                        </Grid>
+
+                        <Separator Margin="0,2,0,10" Opacity="0.3"/>
+
+                        <!-- 스텟 변경 -->
+                        <TextBlock Text="스텟 변경 (변경 없으면 빈칸)" FontSize="10"
+                                   Foreground="{StaticResource TextSecondaryBrush}" Margin="0,0,0,6"/>
+                        <Grid Margin="0,0,0,0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="8"/>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="8"/>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Text="힘" Grid.Column="0" VerticalAlignment="Center"
+                                       FontSize="10" Foreground="{StaticResource TextSecondaryBrush}" Margin="0,0,4,0"/>
+                            <TextBox x:Name="txt_StatStr" Grid.Column="1"/>
+                            <TextBlock Text="민" Grid.Column="3" VerticalAlignment="Center"
+                                       FontSize="10" Foreground="{StaticResource TextSecondaryBrush}" Margin="0,0,4,0"/>
+                            <TextBox x:Name="txt_StatAgi" Grid.Column="4"/>
+                            <TextBlock Text="지" Grid.Column="6" VerticalAlignment="Center"
+                                       FontSize="10" Foreground="{StaticResource TextSecondaryBrush}" Margin="0,0,4,0"/>
+                            <TextBox x:Name="txt_StatInt" Grid.Column="7"/>
+                        </Grid>
+                    </StackPanel>
+                </Border>
+            </ScrollViewer>
+        </Grid>
+
+        <!-- ── 하단 버튼 ── -->
+        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right">
+            <Button Content="📋  양식 클립보드 복사" Width="160" Margin="0,0,8,0"
+                    Click="btn_CopyForm_Click"/>
+            <Button Content="닫기" Width="70"
+                    Background="#3A3A5A" Click="btn_Close_Click"/>
+        </StackPanel>
+    </Grid>
+</Window>

@@ -1,0 +1,67 @@
+<Window x:Class="epicro.BeltSetting"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        Title="벨트 설정" Width="260" SizeToContent="Height"
+        MinWidth="240" MinHeight="200"
+        ResizeMode="CanResize" WindowStartupLocation="CenterOwner"
+        Icon="/epicro_sub.ico"
+        Background="{StaticResource BgPrimaryBrush}"
+        Loaded="Window_Loaded">
+
+    <StackPanel Margin="14">
+
+        <GroupBox Header="부대 지정" Margin="0,0,0,8">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <StackPanel Grid.Column="0">
+                    <TextBlock Text="영웅" Foreground="{StaticResource TextSecondaryBrush}"
+                               FontSize="11" Margin="0,0,0,4"/>
+                    <TextBox x:Name="txt_Hero"/>
+                </StackPanel>
+                <StackPanel Grid.Column="1" Margin="8,0,0,0">
+                    <TextBlock Text="창고" Foreground="{StaticResource TextSecondaryBrush}"
+                               FontSize="11" Margin="0,0,0,4"/>
+                    <TextBox x:Name="txt_Bag"/>
+                </StackPanel>
+            </Grid>
+        </GroupBox>
+
+        <GroupBox Header="벨트 번호" Margin="0,0,0,8">
+            <ComboBox x:Name="cbb_BeltNum">
+                <ComboBoxItem Content="넘버패드1"/>
+                <ComboBoxItem Content="넘버패드2"/>
+                <ComboBoxItem Content="넘버패드4"/>
+                <ComboBoxItem Content="넘버패드5"/>
+                <ComboBoxItem Content="넘버패드7"/>
+                <ComboBoxItem Content="넘버패드8"/>
+            </ComboBox>
+        </GroupBox>
+
+        <GroupBox Header="벨트 속도 (초)" Margin="0,0,0,8">
+            <TextBox x:Name="txt_BeltSpeed"/>
+        </GroupBox>
+
+        <GroupBox Header="옵션" Margin="0,0,0,14">
+            <StackPanel Margin="4,4,4,2">
+                <CheckBox x:Name="cb_save"           Content="세이브"         Margin="0,0,0,6"/>
+                <CheckBox x:Name="cb_pickup"         Content="범줍"           Margin="0,0,0,6"/>
+                <CheckBox x:Name="cb_heroselect"     Content="영웅선택"       Margin="0,0,0,6"/>
+                <CheckBox x:Name="cb_preventChatbox" Content="채팅창 엔터 방지"/>
+            </StackPanel>
+        </GroupBox>
+
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+            <Button x:Name="btn_beltSave"  Content="저장" Width="80"
+                    Margin="0,0,8,0" Click="btn_beltSave_Click"/>
+            <Button x:Name="btn_beltClose" Content="닫기" Width="80"
+                    Background="#3A3A5A" Click="btn_beltClose_Click"/>
+        </StackPanel>
+
+    </StackPanel>
+</Window>

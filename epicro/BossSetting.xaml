@@ -1,0 +1,76 @@
+<Window x:Class="epicro.BossSetting"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        Title="보스 설정" Width="240" SizeToContent="Height"
+        MinWidth="220" MinHeight="180"
+        ResizeMode="CanResize" WindowStartupLocation="CenterOwner"
+        Icon="/epicro_sub.ico"
+        Background="{StaticResource BgPrimaryBrush}"
+        Loaded="Window_Loaded">
+
+    <StackPanel Margin="14">
+
+        <!-- 좌표 설정 버튼들 -->
+        <Grid Margin="0,0,0,8">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Button x:Name="btn_BossROI" Content="보스좌표" Grid.Column="0"
+                    Margin="0,0,4,0" Click="btn_BossROI_Click"/>
+            <Button x:Name="btn_GoldTree" Content="골드목재" Grid.Column="1"
+                    Margin="4,0,0,0" Click="btn_GoldTree_Click"/>
+        </Grid>
+
+        <Button Content="OCR 설정" Margin="0,0,0,10"
+                Background="#2E2F4A" Click="Button_Click"/>
+
+        <!-- 이미지캡쳐 -->
+        <GroupBox Header="이미지 캡쳐">
+            <StackPanel>
+                <ComboBox x:Name="cbb_BossZone" Margin="0,0,0,8">
+                    <ComboBoxItem Content="유적지"/>
+                    <ComboBoxItem Content="해역"/>
+                    <ComboBoxItem Content="태엽"/>
+                    <ComboBoxItem Content="키사메"/>
+                    <ComboBoxItem Content="키미"/>
+                    <ComboBoxItem Content="데달"/>
+                    <ComboBoxItem Content="유기토"/>
+                    <ComboBoxItem Content="우타"/>
+                    <ComboBoxItem Content="사성수"/>
+                </ComboBox>
+                <Button x:Name="btn_AutoCapture" Content="자동캡쳐"
+                        Click="btn_AutoCapture_Click"/>
+            </StackPanel>
+        </GroupBox>
+
+        <!-- 자원 인식 방식 -->
+        <GroupBox Header="자원 인식 방식" Margin="0,10,0,0">
+            <StackPanel Margin="4,4,4,2">
+                <RadioButton x:Name="rb_ModeOCR"    Content="OCR 인식"
+                             GroupName="ResMode" Margin="0,2,0,2"
+                             Checked="rb_Mode_Checked"/>
+                <RadioButton x:Name="rb_ModeMemory" Content="메모리 인식"
+                             GroupName="ResMode" Margin="0,2,0,2"
+                             Checked="rb_Mode_Checked"/>
+                <!-- OCR 전용 UI: 메모리 모드 선택 시 숨김 -->
+                <StackPanel x:Name="pnl_OcrOnly" Margin="0,6,0,0">
+                    <TextBlock Text="OCR 좌표 설정이 필요합니다."
+                               Foreground="#888" FontSize="10"
+                               TextWrapping="Wrap"/>
+                </StackPanel>
+            </StackPanel>
+        </GroupBox>
+
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,10,0,0">
+            <Button x:Name="btn_Save"  Content="저장" Width="80"
+                    Margin="0,0,8,0" Click="btn_Save_Click"/>
+            <Button x:Name="btn_Close" Content="닫기" Width="80"
+                    Background="#3A3A5A" Click="btn_Close_Click"/>
+        </StackPanel>
+
+    </StackPanel>
+</Window>
