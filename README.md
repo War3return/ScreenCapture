@@ -3,8 +3,6 @@
 Warcraft 3 전용 게임 자동화 및 보조 도구입니다.
 Windows Graphics Capture API를 활용한 화면 캡처, OCR 기반 텍스트 인식, 메모리 직접 읽기 등 다양한 기능을 제공합니다.
 
-![Capture Selection](Images/WPFCapture.png)
-
 ---
 
 ## 주요 기능
