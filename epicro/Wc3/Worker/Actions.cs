@@ -34,7 +34,8 @@ namespace epicro.Wc3.Worker
                 SaveWatcherTimer.Enabled = SaveFileWatcher.EnableRaisingEvents = false;
             };
             SaveFileWatcher.Created += Actions.SaveFileWatcher_Created;
-            ReplayWatcher.Created   += Actions.ReplayWatcher_Function;
+            ReplayWatcher.Created  += Actions.ReplayWatcher_Function;
+            ReplayWatcher.Changed  += Actions.ReplayWatcher_Function;
             MapFileWatcher.Created  += Actions.MapFileWatcher_Created;
         }
 
@@ -296,18 +297,20 @@ namespace epicro.Wc3.Worker
 
         internal static async void ReplayWatcher_Function(object sender, FileSystemEventArgs e)
         {
+            // 중복 이벤트 차단: Created/Changed 동시 구독 시 진입 즉시 비활성화
+            MainWorker.ReplayWatcher.EnableRaisingEvents = false;
             if (Settings.IsOptimizeAfterEndGame && await CProcess.TrimProcessMemory() && Settings.IsMemoryOptimize)
                 MemoryOptimizeChecker.Restart();
             if (!Settings.IsAutoReplay)
             {
                 IsTime = IsSaved = false;
                 name = string.Empty;
+                MainWorker.ReplayWatcher.EnableRaisingEvents = true;
                 return;
             }
             try
             {
                 await Task.Delay(1000);
-                MainWorker.ReplayWatcher.EnableRaisingEvents = false;
                 string LastReplay = $"{Path.GetDirectoryName(e.FullPath)}\\LastReplay.w3g";
                 if (File.Exists(LastReplay) && new FileInfo(LastReplay).Length >= 1024)
                 {
