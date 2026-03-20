@@ -209,7 +209,8 @@ namespace epicro.Logic
             {
                 bool ok = Wc3ChatSender.SendChatMessage("-save");
                 log(ok ? "세이브 완료!" : Wc3ChatSender.LastError);
-                Thread.Sleep(500);
+                Thread.Sleep(500); // WC3가 파일을 생성할 시간
+                if (ok) epicro.Wc3.Worker.Actions.RpgSave(null); // 수동 세이브와 동일한 경로 정리
             }
         }
 
