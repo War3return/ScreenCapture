@@ -207,10 +207,10 @@ namespace epicro.Logic
             // 세이브
             if (saveEnabled)
             {
+                epicro.Wc3.Worker.Actions.SetSaveReady(); // 파일 감시자 사전 활성화 (async void 우회)
                 bool ok = Wc3ChatSender.SendChatMessage("-save");
                 log(ok ? "세이브 완료!" : Wc3ChatSender.LastError);
-                Thread.Sleep(500); // WC3가 파일을 생성할 시간
-                if (ok) epicro.Wc3.Worker.Actions.RpgSave(null); // 수동 세이브와 동일한 경로 정리
+                Thread.Sleep(500);
             }
         }
 

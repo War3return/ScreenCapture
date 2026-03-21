@@ -608,6 +608,23 @@ namespace epicro.Wc3.Worker
             AutoRG.RunWorkerAsync(-1);
         }
 
+        /// <summary>
+        /// 벨트매크로 등 외부에서 WC3에 -save를 보내기 전에 호출.
+        /// IsSaved 플래그와 파일 감시자를 준비해두면, WC3가 파일을 생성할 때
+        /// SaveFileWatcher_Created가 정상적으로 처리한다.
+        /// async void를 백그라운드 스레드에서 호출하는 것을 피하기 위한 동기 헬퍼.
+        /// </summary>
+        internal static void SetSaveReady()
+        {
+            if (string.IsNullOrEmpty(Category[1]))
+                Category[1] = "미지정";
+            IsSaved = true;
+            name    = string.Empty;
+            if (!string.IsNullOrEmpty(MainWorker.SaveFileWatcher.Path))
+                MainWorker.SaveWatcherTimer.Enabled =
+                    MainWorker.SaveFileWatcher.EnableRaisingEvents = true;
+        }
+
         internal static async void RpgSave(string[] args)
         {
             if (!IsInGame) return;
